@@ -39,7 +39,7 @@ router.post('/', verifyTokenAndAdmin, upload.array('images', 10), [
   const errors = validationResult(req)
 
   if(!errors.isEmpty()){
-    res.status(422).json({errors: errors.array()})
+    return res.status(422).json({errors: errors.array()})
   }
   if (!req.files || req.files.length === 0) {
     return res.status(400).json({ message: 'No images were uploaded.' });
