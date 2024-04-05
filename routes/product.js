@@ -102,6 +102,19 @@ router.put('/:id', verifyTokenAndAdmin, upload.array('images', 10), [
   }
 });
 
+router.get('/:id', verifyTokenAndAuthorization, async (req, res) => {
+  const productId = req.params.id;
+  try {
+    const singleProduct = await Product.findById(productId);
+    if (!singleProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json(singleProduct);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 router.delete('/:id', verifyTokenAndAdmin, async (req,res)=> {
   const productId = req.params.id
   try{
